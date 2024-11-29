@@ -1,63 +1,67 @@
 "use client";
-
-import { useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
 import Link from "next/link";
+import React, { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
 
 const Profile = () => {
-  const [user, setUser] = useState<any>(null);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const router = useRouter();
 
-  // Check if user is logged in by fetching from sessionStorage
+  // Check if the user is logged in by checking localStorage
   useEffect(() => {
-    const userData = sessionStorage.getItem("user");
-
-    if (!userData) {
-      router.push("/login"); // Redirect to login if no user is logged in
-    } else {
-      setUser(JSON.parse(userData));
+    const userData = localStorage.getItem("user");
+    if (userData) {
+      setIsLoggedIn(true);
     }
-  }, [router]);
+  }, []);
 
-  // Function to handle logout
   const handleLogout = () => {
-    // Clear user data from sessionStorage
-    sessionStorage.removeItem("user");
-    
-    // Redirect to login page after logout
+    // Clear the user data from localStorage
+    localStorage.removeItem("user");
+    setIsLoggedIn(false);
     router.push("/login");
   };
 
-  if (!user) return <div>Loading...</div>;
-
   return (
-    <div className="min-h-screen bg-gradient-to-r from-purple-600 to-indigo-800 flex items-center justify-center py-10">
-      <div className="bg-white p-8 rounded-xl shadow-xl w-full max-w-lg transform transition-all duration-500 ease-in-out hover:scale-105">
-        <h1 className="text-3xl font-extrabold text-center text-gray-800 mb-6 animate__animated animate__fadeIn">
-          Welcome, {user.name}
-        </h1>
-
-        <div className="space-y-4">
-          <p className="text-xl font-medium text-gray-600">Name: <span className="text-gray-800 font-bold">{user.name}</span></p>
-          <p className="text-xl font-medium text-gray-600">Email: <span className="text-gray-800 font-bold">{user.email}</span></p>
+    <div className="min-h-screen bg-gradient-to-r from-indigo-100 via-purple-100 to-pink-100 flex flex-col text-gray-800">
+      {/* Navbar */}
+      <nav className="bg-gradient-to-r from-purple-500 via-pink-500 to-indigo-500 p-4 fixed top-0 left-0 w-full z-10 shadow-lg">
+        <div className="flex justify-between items-center container mx-auto text-white">
+          <div className="text-2xl font-extrabold">Nerasoft</div>
+          <div className="space-x-6 text-lg">
+            <Link href="/dashboard" className="hover:text-yellow-300 transition-colors duration-300">
+              Dashboard
+            </Link>
+            <Link href="/" className="hover:text-yellow-300 transition-colors duration-300">
+              Home
+            </Link>
+            <Link href="/about" className="hover:text-yellow-300 transition-colors duration-300">
+              About
+            </Link>
+            <Link href="/contact" className="hover:text-yellow-300 transition-colors duration-300">
+              Contact
+            </Link>
+            {isLoggedIn && (
+              <button
+                onClick={handleLogout}
+                className="hover:text-red-400 transition-colors duration-300"
+              >
+                Logout
+              </button>
+            )}
+          </div>
         </div>
+      </nav>
 
-        <div className="mt-6 text-center">
-          <Link href="/dashboard">
-            <button className="px-6 py-3 bg-purple-600 text-white rounded-full hover:bg-purple-700 transition-all duration-300 transform hover:scale-105">
-              Go to Dashboard
-            </button>
-          </Link>
-        </div>
-
-        {/* Logout button */}
-        <div className="mt-4 text-center">
-          <button
-            onClick={handleLogout}
-            className="px-6 py-3 bg-red-600 text-white rounded-full hover:bg-red-700 transition-all duration-300 transform hover:scale-105"
-          >
-            Logout
-          </button>
+      {/* Main content */}
+      <div className="flex-grow flex items-center justify-center pt-24 px-4 text-center">
+        <div className="bg-gradient-to-br from-white to-gray-50 p-8 rounded-lg shadow-xl w-full max-w-lg">
+          <h1 className="text-3xl font-bold text-purple-700 mb-6">
+            Welcome to Your Profile
+          </h1>
+          <p className="text-gray-700">
+            Use the navigation above to explore the site.
+          </p>
         </div>
       </div>
     </div>

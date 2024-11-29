@@ -33,12 +33,17 @@ const Signup = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-r from-blue-500 to-purple-600">
+    <div
+      className="min-h-screen flex items-center justify-center bg-cover bg-center"
+      style={{
+        backgroundImage: "url('https://plus.unsplash.com/premium_photo-1681433341528-717392741172?q=80&w=2103&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D?text=Static+Image')", // Replace with your own image URL
+      }}
+    >
       <form
         onSubmit={handleSubmit}
-        className="bg-white p-8 rounded-lg shadow-xl w-full max-w-lg space-y-6 transform transition-all duration-500 ease-in-out hover:scale-105"
+        className="bg-[#fe83ab] p-8 rounded-lg shadow-xl w-full max-w-lg space-y-6 transform transition-all duration-500 ease-in-out hover:scale-105"
       >
-        <h1 className="text-3xl font-bold text-center text-gray-800 mb-6">
+        <h1 className="text-3xl font-bold text-center text-white mb-6">
           Join Us Now
         </h1>
 
